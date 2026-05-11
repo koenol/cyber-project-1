@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<body>
+    <h1>Cyber Project 1 App</h1>
+    <p>Logged in as: {{ user if user else "Guest" }}</p>
+    {% if balance is not none %}
+    <p>Balance: ${{ balance }}</p>
+    {% endif %}
+    <ul>
+        <li><a href="/login">Login</a></li>
+        <li><a href="/profile/admin">View Admin Profile</a></li>
+        <li><a href="/transfer">Transfer Funds</a></li>
+        <li><a href="/error">Trigger Error</a></li>
+        <li><a href="/logout">Logout</a></li>
+    </ul>
+</body>
+</html>
