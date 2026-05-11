@@ -23,7 +23,7 @@ $ venv\Scripts\activate
 
 Install Dependencies
 ```
-   pip install -r requirements.txt
+pip install -r requirements.txt
 ```
 
 ##  Start the flask app
@@ -32,3 +32,5 @@ Install Dependencies
 flask run
 ```
 Open browser and go to http://localhost:5000
+
+The full report of the flaws can be found here: ![](static/report.md)

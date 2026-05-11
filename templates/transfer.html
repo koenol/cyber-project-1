@@ -3,6 +3,8 @@
 <body>
     <h1>Transfer Funds</h1>
     <form action="/transfer" method="POST">
+        <!-- FLAW 4 FIX: Valid CSRF token must be sent to backend, see app.py:68 for info about the flaw-->
+        <!-- <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/> -->
         To User: <input type="text" name="to_user"><br>
         Amount: <input type="number" name="amount" step="1"><br>
         <input type="submit" value="Transfer">

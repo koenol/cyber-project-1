@@ -15,12 +15,23 @@ def create_db():
             balance INT NOT NULL
         )
     ''')
-    
+    # FLAW 2 - A04:2025 Cryptographic Failures
+    # This flaw is heavily tied to A07:2025 Authentication Failures. This vulnerability allows attacker to brute-force password checks easily because passwords are not hashed.
+    # Passwords are not hashed and are stored in plain human readable form when creating a database.
+    # See more app.py:25
     users_data = [
         ("admin", "admin123", "admin", 999999),
         ("user1", "password", "user", 1000),
         ("user2", "testi123", "user", 1000)
     ]
+    # FLAW 2 FIX:
+    # from werkzeug.security import generate_password_hash
+    # users_data = [
+    #     ("admin", generate_password_hash("admin123"), "admin", 999999),
+    #     ("user1", generate_password_hash("password"), "user", 1000),
+    #     ("user2", generate_password_hash("testi123"), "user", 1000)
+    # ]
+    # See more db.py:52
     conn.executemany(
         'INSERT OR IGNORE INTO users (username, password, role, balance) VALUES (?, ?, ?, ?)',
         users_data
@@ -38,6 +49,10 @@ def check_login(username, password):
     user = get_user(username)
     if user and user["password"] == password:
         return user
+    # FLAW 2 FIX:
+    # from werkzeug.security import check_password_hash
+    # if user and check_password_hash(user['password'], password):
+    #     return user
     return None
 
 def transfer(user1, user2, amount):
