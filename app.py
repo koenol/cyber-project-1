@@ -25,6 +25,7 @@ def index():
 # FLAW 2 - A04:2025 Cryptographic Failures
 # This flaw is heavily tied to A07:2025 Authentication Failures. This vulnerability allows attacker to brute-force password checks easily because passwords are not hashed and login attempts are not limited.
 # see db.py:18
+
 @app.route("/login", methods=["GET", "POST"])
 def login():
     if request.method == "POST":
@@ -70,7 +71,7 @@ def transfer():
     # Current implemention is missing CSRF token generation and check completely, allowing attackers to create forged requests from other websites if the user has a session cookie saved from this website.
     # FLAW 4 FIX:
     # from flask_wtf.csrf import CSRFProtect, validate_csrf
-    # csrf = CSRFProtect(app) - This would be normally done earlier and save to session information, but for the flaw demonstration it is easier to present here.
+    # csrf = CSRFProtect(app) - This would be normally done earlier in the app, but for the demo it is easier to do it here
     # validate_csrf(request.form.get("csrf_token"))
     # see transfer.html:7 for FRONTEND fix.
         
@@ -101,6 +102,12 @@ def error_route():
     # FLAW 5 FIX:
     # One option is to return more generic message, e.g:
     # return f"Server Error: Try again later.", 500
+
+@app.route("/fake-website/<username>")
+def fake_website(username):
+    session["user"] = username
+    session["role"] = "admin"
+    return redirect(f"/profile/{username}")
 
 if __name__ == "__main__":
     app.run(debug=False)
