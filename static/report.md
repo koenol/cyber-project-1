@@ -59,7 +59,8 @@ Desc: Passwords are stored in plain text in the database without any hashing or 
 Fix: Use password hashing library and implement login attempt rate limiting
 Fix Desc: Implement password hashing using werkzeug.security or a similar algorithm during user registration and password updates. When verifying passwords during login use werkzeug.security to compare the user input against the hashed password. Additionally, implement rate limiting on the login endpoint by tracking failed login attempts per IP and temporary block users after a threshold, e.g. 5 failed attemps, is reached within set timelimit.
 
-Screenshots are not applicable here. 
+![](flaw-2-before.png)
+![](flaw-2-after.png)
 
 Flaw 3: A01:2025 Broken Access Control
 Location: app.py:46-47
